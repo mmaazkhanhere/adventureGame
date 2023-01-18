@@ -9,7 +9,7 @@ var enemyHP:number=100; //health of enemy
 var healthRegain=3; //time health can be regained
 
 let enemiesList:string[]=['Archer','Samurai','Ghoul','Bomberman']; //enemies list
-var enemyToFight=enemiesList[Math.floor(Math.random()*4)] //randomly selecting enemy
+var enemyToFight:string; //randomly selecting enemy
 
 function animationStop(){ 
     return new Promise((res)=>{
@@ -27,29 +27,42 @@ async function animationDisplay(){ //function for animation display
 
 async function userOptions(){ //main function 
     
-    console.log(`\n${enemyToFight} has arrived at the scene!\n`); //name of enemy to face
-
-    do{ //do at least once
+    do{
+        enemyToFight=enemiesList[Math.floor(Math.random()*4)]; //randomly selecting enemy
+        console.log(`\n${enemyToFight} has arrived at the scene!\n`); //name of enemy to face
         
-    let userOptions= await inquirer.prompt([{
-        name:'userOptions',
-        type:'list',
-        message:'Choose an action!',
-        choices:['Strike','Regain Health','Retreat']
-    }]);//user select an action
+        do{ //do at least once
+        
+        let userOptions= await inquirer.prompt([{
+            name:'userOptions',
+            type:'list',
+            message:'Choose an action!',
+            choices:['Strike','Regain Health','Retreat']
+        }]);//user select an action
 
-    switch(userOptions.userOptions){ //switching based on user choice
-        case 'Strike':
-            await strike(); 
-            break;
-        case 'Regain Health': 
-            await healthBoost(); 
-            break;
-        case 'Retreat':
-            await Retreat();
-            break;
-        }
-    }while(enemyHP>=0 && playerHP>=0) //continue unless either enemy of the player wins
+        switch(userOptions.userOptions){ //switching based on user choice
+            case 'Strike':
+                await strike(); 
+                break;
+            case 'Regain Health': 
+                await healthBoost(); 
+                break;
+            case 'Retreat':
+                await Retreat();
+                break;
+            }
+        }while(enemyHP>=0 && playerHP>=0) //continue unless either enemy of the player wins
+        
+        playerHP=100;
+        enemyHP=100;
+
+        var doAgain= await inquirer.prompt([{
+            name:'doAgain',
+            type:'list',
+            message:'Do you want to play the game again?',
+            choices:['Yes','No']
+        }])
+    }while(doAgain.doAgain=='Yes')
 }
 
 async function strike(){ //function to run if user choose to strike the enemy
@@ -126,10 +139,10 @@ async function strike(){ //function to run if user choose to strike the enemy
         enemyHP=enemyHP-playerDamage;
 
         if(enemyHP<0){ //player wins
-            console.log(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\n`)
+            console.log(chalk.bgBlue(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\n`))
         }
         else if(playerHP<0){ //player loses
-            console.log(`You have been defeated.\n`)
+            console.log(chalk.bgRed(`You have been defeated.\n`))
         }
         else{ //display both enemy and player health
             console.log(`Player Health: ${playerHP}\nEnemy Health: ${enemyHP}\nHealth Regain Drink: ${healthRegain}\n`)
