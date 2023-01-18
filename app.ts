@@ -125,7 +125,7 @@ async function strike(){
 
 async function healthBoost(){
     if(healthRegain==0){
-        console.log(`Cannot add anymore health`)
+        console.log(`Cannot add anymore health\n`)
     }
     else{
         --healthRegain;
@@ -136,7 +136,7 @@ async function healthBoost(){
 
 async function Retreat(){
     enemyToFight=enemiesList[Math.floor(Math.random()*4)];
-    console.log(`${enemyToFight} has arrived at the scene!`);
+    console.log(`\n${enemyToFight} has arrived at the scene!`);
     enemyHP=100;
 }
 
