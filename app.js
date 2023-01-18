@@ -40,7 +40,7 @@ async function strike() {
         let playerDamage = Math.ceil(Math.random() * 20);
         let enemyDamage = Math.ceil(Math.random() * 10);
         playerHP = playerHP - enemyDamage;
-        enemyHP = playerHP - playerDamage;
+        enemyHP = enemyHP - playerDamage;
         if (enemyHP < 0) {
             console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`);
         }
@@ -52,7 +52,7 @@ async function strike() {
         let playerDamage = Math.ceil(Math.random() * 19);
         let enemyDamage = Math.ceil(Math.random() * 12);
         playerHP = playerHP - enemyDamage;
-        enemyHP = playerHP - playerDamage;
+        enemyHP = enemyHP - playerDamage;
         if (enemyHP < 0) {
             console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`);
         }
@@ -64,7 +64,7 @@ async function strike() {
         let playerDamage = Math.ceil(Math.random() * 18);
         let enemyDamage = Math.ceil(Math.random() * 14);
         playerHP = playerHP - enemyDamage;
-        enemyHP = playerHP - playerDamage;
+        enemyHP = enemyHP - playerDamage;
         if (enemyHP < 0) {
             console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`);
         }
@@ -76,7 +76,7 @@ async function strike() {
         let playerDamage = Math.ceil(Math.random() * 17);
         let enemyDamage = Math.ceil(Math.random() * 16);
         playerHP = playerHP - enemyDamage;
-        enemyHP = playerHP - playerDamage;
+        enemyHP = enemyHP - playerDamage;
         if (enemyHP < 0) {
             console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`);
         }

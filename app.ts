@@ -47,8 +47,10 @@ async function strike(){
     if(enemyToFight=='Archer'){
         let playerDamage:number=Math.ceil(Math.random()*20);
         let enemyDamage:number=Math.ceil(Math.random()*10);
+
         playerHP=playerHP-enemyDamage;
-        enemyHP=playerHP-playerDamage;
+        enemyHP=enemyHP-playerDamage;
+
         if(enemyHP<0){
             console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
         }
@@ -56,11 +58,14 @@ async function strike(){
             console.log(`Player Health: ${playerHP}\nEnemy Health:${enemyHP}`)
         }
     }
+
     else if(enemyToFight=='Ghoul'){
         let playerDamage:number=Math.ceil(Math.random()*19);
         let enemyDamage:number=Math.ceil(Math.random()*12);
+
         playerHP=playerHP-enemyDamage;
-        enemyHP=playerHP-playerDamage;
+        enemyHP=enemyHP-playerDamage;
+
         if(enemyHP<0){
             console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
         }
@@ -68,11 +73,14 @@ async function strike(){
             console.log(`Player Health: ${playerHP}\nEnemy Health:${enemyHP}`)
         }
     }
+
     else if(enemyToFight=='Bomberman'){
         let playerDamage:number=Math.ceil(Math.random()*18);
         let enemyDamage:number=Math.ceil(Math.random()*14);
+
         playerHP=playerHP-enemyDamage;
-        enemyHP=playerHP-playerDamage;
+        enemyHP=enemyHP-playerDamage;
+
         if(enemyHP<0){
             console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
         }
@@ -83,8 +91,10 @@ async function strike(){
     else if(enemyToFight=='Samurai'){
         let playerDamage:number=Math.ceil(Math.random()*17);
         let enemyDamage:number=Math.ceil(Math.random()*16);
+
         playerHP=playerHP-enemyDamage;
-        enemyHP=playerHP-playerDamage;
+        enemyHP=enemyHP-playerDamage;
+        
         if(enemyHP<0){
             console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
         }
