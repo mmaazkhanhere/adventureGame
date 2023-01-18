@@ -4,20 +4,20 @@ import inquirer from "inquirer"
 import chalk from "chalk"
 import chalkAnimation from "chalk-animation"
 
-var playerHP:number=100;
-var enemyHP:number=100;
-var healthRegain=3;
+var playerHP:number=100; //health of player
+var enemyHP:number=100; //health of enemy 
+var healthRegain=3; //time health can be regained
 
-let enemiesList:string[]=['Archer','Samurai','Ghoul','Bomberman'];
-var enemyToFight=enemiesList[Math.floor(Math.random()*4)]
+let enemiesList:string[]=['Archer','Samurai','Ghoul','Bomberman']; //enemies list
+var enemyToFight=enemiesList[Math.floor(Math.random()*4)] //randomly selecting enemy
 
-function animationStop(){
+function animationStop(){ 
     return new Promise((res)=>{
         setTimeout(res,2500);
     })
 }
 
-async function animationDisplay(){
+async function animationDisplay(){ //function for animation display
     let title=chalkAnimation.pulse('Adventure Game');
     await animationStop();
     let secondTitle=chalkAnimation.rainbow('Welcome to the Dungeon');
@@ -25,109 +25,124 @@ async function animationDisplay(){
     secondTitle.stop();
 }
 
-async function userOptions(){
+async function userOptions(){ //main function 
     
-    console.log(`\n${enemyToFight} has arrived at the scene!\n`);
+    console.log(`\n${enemyToFight} has arrived at the scene!\n`); //name of enemy to face
 
-    do{
+    do{ //do at least once
+        
     let userOptions= await inquirer.prompt([{
         name:'userOptions',
         type:'list',
         message:'Choose an action!',
         choices:['Strike','Regain Health','Retreat']
-    }]);
-    switch(userOptions.userOptions){
+    }]);//user select an action
+
+    switch(userOptions.userOptions){ //switching based on user choice
         case 'Strike':
-            await strike();
+            await strike(); 
             break;
-        case 'Regain Health':
-            await healthBoost();
+        case 'Regain Health': 
+            await healthBoost(); 
             break;
         case 'Retreat':
             await Retreat();
             break;
         }
-    }while(enemyHP>=0 && playerHP>=0)
+    }while(enemyHP>=0 && playerHP>=0) //continue unless either enemy of the player wins
 }
 
-async function strike(){
+async function strike(){ //function to run if user choose to strike the enemy
+    //player will recieve different damage depending on the enemy it faces, corresponding to the fact that not all enemies are equal
+
     if(enemyToFight=='Archer'){
-        let playerDamage:number=Math.ceil(Math.random()*20);
-        let enemyDamage:number=Math.ceil(Math.random()*10);
+        // will run if the player is facing archer as enemy
 
-        playerHP=playerHP-enemyDamage;
-        enemyHP=enemyHP-playerDamage;
+        let playerDamage:number=Math.ceil(Math.random()*20); //damage player will cause
+        let enemyDamage:number=Math.ceil(Math.random()*10); //damage the enemy will cause
 
-        if(enemyHP<0){
-            console.log(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\n`)
+        playerHP=playerHP-enemyDamage; //damage recieved by the player
+        enemyHP=enemyHP-playerDamage; //damage recieved by the enemy
+
+        if(enemyHP<0){ //if enenmy health gets zero, the enemy has been defeated
+
+            console.log(chalk.bgBlue(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\n`))
         }
-        else if(playerHP<0){
-            console.log(`You have been defeated.\n`)
+        else if(playerHP<0){ //if player health gets zero, the player has been defeated
+            console.log(chalk.bgRed(`You have been defeated.\n`))
         }
-        else{
+        else{ //display the health of both player and enemy if none of them is KO
             console.log(`Player Health: ${playerHP}\nEnemy Health: ${enemyHP}\nHealth Regain Drink: ${healthRegain}\n`)
         }
-    }
+    } 
 
     else if(enemyToFight=='Ghoul'){
-        let playerDamage:number=Math.ceil(Math.random()*19);
+        // will run if the user is facing ghoul as an enemy
+
+
+        let playerDamage:number=Math.ceil(Math.random()*19); //damage caused by player and enemy
         let enemyDamage:number=Math.ceil(Math.random()*12);
 
-        playerHP=playerHP-enemyDamage;
+        playerHP=playerHP-enemyDamage; //damage recieved by player and enemy
         enemyHP=enemyHP-playerDamage;
 
-        if(enemyHP<0){
-            console.log(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\n`)
+        if(enemyHP<0){ //player wins if the enemy health becomes 0
+            console.log(chalk.bgBlue(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\n`))
         }
-        else if(playerHP<0){
-            console.log(`You have been defeated.\n`)
+        else if(playerHP<0){ //player loses if its health become 0
+            console.log(chalk.bgRed(`You have been defeated.\n`))
         }
-        else{
+        else{ //display enemy and player health
             console.log(`Player Health: ${playerHP}\nEnemy Health: ${enemyHP}\nHealth Regain Drink: ${healthRegain}\n`)
         }
     }
 
     else if(enemyToFight=='Bomberman'){
-        let playerDamage:number=Math.ceil(Math.random()*18);
+        //will run if the user is facing bomberman as an enemy
+
+        let playerDamage:number=Math.ceil(Math.random()*18); //damage caused by player and enemy
         let enemyDamage:number=Math.ceil(Math.random()*14);
 
-        playerHP=playerHP-enemyDamage;
+        playerHP=playerHP-enemyDamage; //damage faced by player and enemy
         enemyHP=enemyHP-playerDamage;
 
-        if(enemyHP<0){
-            console.log(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\n`)
+        if(enemyHP<0){ //player wins if the enemy health gets 0
+            console.log(chalk.bgBlue(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\n`))
         }
-        else if(playerHP<0){
-            console.log(`You have been defeated.\n`)
+        else if(playerHP<0){ //player loses if its health becomes 0
+            console.log(chalk.bgRed(`You have been defeated.\n`))
         }
-        else{
+        else{ //display both player and enemy health
             console.log(`Player Health: ${playerHP}\nEnemy Health: ${enemyHP}\nHealth Regain Drink: ${healthRegain}\n`)
         }
     }
     else if(enemyToFight=='Samurai'){
-        let playerDamage:number=Math.ceil(Math.random()*17);
+        //will run if the player is facing Samurai as an enemy
+
+        let playerDamage:number=Math.ceil(Math.random()*17); //damages caused
         let enemyDamage:number=Math.ceil(Math.random()*16);
 
-        playerHP=playerHP-enemyDamage;
+        playerHP=playerHP-enemyDamage; //damages recieved
         enemyHP=enemyHP-playerDamage;
 
-        if(enemyHP<0){
+        if(enemyHP<0){ //player wins
             console.log(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\n`)
         }
-        else if(playerHP<0){
+        else if(playerHP<0){ //player loses
             console.log(`You have been defeated.\n`)
         }
-        else{
+        else{ //display both enemy and player health
             console.log(`Player Health: ${playerHP}\nEnemy Health: ${enemyHP}\nHealth Regain Drink: ${healthRegain}\n`)
         }
     }
 }
 
 async function healthBoost(){
-    if(healthRegain==0){
+    //function to regain health
+    if(healthRegain==0){ //if no life regaining potion available, display this
         console.log(`Cannot add anymore health\n`)
     }
-    else{
+    else{ //if available, increase player health and decrement drinks available
         --healthRegain;
         playerHP += 45
         console.log(`Player Health: ${playerHP}\nHealth Regain Drink left: ${healthRegain}\n`)
@@ -135,10 +150,12 @@ async function healthBoost(){
 }
 
 async function Retreat(){
-    enemyToFight=enemiesList[Math.floor(Math.random()*4)];
+    //function when the player choose to retreat
+
+    enemyToFight=enemiesList[Math.floor(Math.random()*4)]; //another enemy faced by the player (you cannot run from your problems)
     console.log(`\n${enemyToFight} has arrived at the scene!`);
-    enemyHP=100;
+    enemyHP=100; //renew the health of the enemy
 }
 
-//animationDisplay();
+await animationDisplay();
 userOptions();
