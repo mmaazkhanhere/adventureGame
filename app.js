@@ -5,7 +5,7 @@ var playerHP = 100;
 var enemyHP = 100;
 var healthRegain = 3;
 let enemiesList = ['Archer', 'Samurai', 'Ghoul', 'Bomberman'];
-var enemyToFight = enemiesList[Math.ceil(Math.random() * 4)];
+var enemyToFight = enemiesList[Math.floor(Math.random() * 4)];
 function animationStop() {
     return new Promise((res) => {
         setTimeout(res, 2500);
@@ -19,21 +19,26 @@ async function animationDisplay() {
     secondTitle.stop();
 }
 async function userOptions() {
-    console.log(`${enemyToFight} has arrived at the scene!`);
-    let userOptions = await inquirer.prompt([{
-            name: 'userOptions',
-            type: 'list',
-            message: 'Choose an action!',
-            choices: ['Strike', 'Regain Health', 'Retreat']
-        }]);
-    switch (userOptions.userOptions) {
-        case 'Strike':
-            await strike();
-            break;
-        case 'Regain Health':
-            await healthBoost();
-            break;
-    }
+    do {
+        console.log(`${enemyToFight} has arrived at the scene!`);
+        let userOptions = await inquirer.prompt([{
+                name: 'userOptions',
+                type: 'list',
+                message: 'Choose an action!',
+                choices: ['Strike', 'Regain Health', 'Retreat']
+            }]);
+        switch (userOptions.userOptions) {
+            case 'Strike':
+                await strike();
+                break;
+            case 'Regain Health':
+                await healthBoost();
+                break;
+            case 'Retreat':
+                await Retreat();
+                break;
+        }
+    } while (enemyHP > 0 && playerHP > 0);
 }
 async function strike() {
     if (enemyToFight == 'Archer') {
@@ -94,6 +99,10 @@ async function healthBoost() {
         playerHP += 45;
         console.log(`Player Health: ${playerHP}\nHealth Regain Drink left: ${healthRegain}`);
     }
+}
+async function Retreat() {
+    enemyToFight = enemiesList[Math.floor(Math.random() * 4)];
+    console.log(`${enemyToFight} has arrived at the scene!`);
 }
 //animationDisplay();
 userOptions();

@@ -9,7 +9,7 @@ var enemyHP:number=100;
 var healthRegain=3;
 
 let enemiesList:string[]=['Archer','Samurai','Ghoul','Bomberman'];
-var enemyToFight=enemiesList[Math.ceil(Math.random()*4)]
+var enemyToFight=enemiesList[Math.floor(Math.random()*4)]
 
 function animationStop(){
     return new Promise((res)=>{
@@ -26,7 +26,8 @@ async function animationDisplay(){
 }
 
 async function userOptions(){
-    console.log(`${enemyToFight} has arrived at the scene!`)
+    do{
+    console.log(`${enemyToFight} has arrived at the scene!\n`)
     let userOptions= await inquirer.prompt([{
         name:'userOptions',
         type:'list',
@@ -40,7 +41,11 @@ async function userOptions(){
         case 'Regain Health':
             await healthBoost();
             break;
+        case 'Retreat':
+            await Retreat();
+            break;
         }
+    }while(enemyHP>0 && playerHP>0)
 }
 
 async function strike(){
@@ -52,7 +57,7 @@ async function strike(){
         enemyHP=enemyHP-playerDamage;
 
         if(enemyHP<0){
-            console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
+            console.log(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
         }
         else{
             console.log(`Player Health: ${playerHP}\nEnemy Health:${enemyHP}`)
@@ -67,7 +72,7 @@ async function strike(){
         enemyHP=enemyHP-playerDamage;
 
         if(enemyHP<0){
-            console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
+            console.log(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
         }
         else{
             console.log(`Player Health: ${playerHP}\nEnemy Health:${enemyHP}`)
@@ -82,7 +87,7 @@ async function strike(){
         enemyHP=enemyHP-playerDamage;
 
         if(enemyHP<0){
-            console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
+            console.log(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
         }
         else{
             console.log(`Player Health: ${playerHP}\nEnemy Health:${enemyHP}`)
@@ -94,9 +99,9 @@ async function strike(){
 
         playerHP=playerHP-enemyDamage;
         enemyHP=enemyHP-playerDamage;
-        
+
         if(enemyHP<0){
-            console.log(`You have defeated ${enemyToFight}Player Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
+            console.log(`You have defeated ${enemyToFight}\nPlayer Health: ${playerHP}\nHealth Regain Drink:${healthRegain}`)
         }
         else{
             console.log(`Player Health: ${playerHP}\nEnemy Health:${enemyHP}`)
@@ -113,6 +118,11 @@ async function healthBoost(){
         playerHP += 45
         console.log(`Player Health: ${playerHP}\nHealth Regain Drink left: ${healthRegain}`)
     }
+}
+
+async function Retreat(){
+    enemyToFight=enemiesList[Math.floor(Math.random()*4)];
+    console.log(`${enemyToFight} has arrived at the scene!`);
 }
 
 //animationDisplay();
